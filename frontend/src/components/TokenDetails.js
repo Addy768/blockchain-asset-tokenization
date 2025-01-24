@@ -22,3 +22,4 @@ function TokenDetails() {
         </div>
       );
     }
+    export default TokenDetails;
