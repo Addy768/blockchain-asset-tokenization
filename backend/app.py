@@ -32,3 +32,21 @@ def mint_tokens():
         return jsonify({"error": str(e)}), 500
 
 @app.route("/balance", methods=["GET"])
+def get_balance():
+    """
+    Retrieve token balance of a specific wallet.
+    Expects 'address' as a query parameter.
+    """
+    try:
+        wallet_address = request.args.get("address")
+        if not wallet_address:
+            return jsonify({"error": "Wallet address is required"}), 400
+
+        # Get balance
+        balance = blockchain_provider.get_token_balance(wallet_address)
+        return jsonify({
+            "wallet_address": wallet_address,
+            "balance": balance
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
