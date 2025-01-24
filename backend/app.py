@@ -50,3 +50,6 @@ def get_balance():
         })
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    # sss
+
+@app.route("/historical", methods=["GET"])
