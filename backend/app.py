@@ -53,3 +53,20 @@ def get_balance():
     # sss
 
 @app.route("/historical", methods=["GET"])
+def get_historical_data():
+    """ 
+    Retrieve historical transaction data for tokens.
+    Expects 'start_date' and 'end_date' as query parameters.
+    """
+    try:
+        start_date = request.args.get("start_date")
+        end_date = request.args.get("end_date")
+
+        if not start_date or not end_date:
+            return jsonify({"error": "Start date and end date are required"}), 400
+
+        # Fetch historical data (functionality needs implementation in blockchain_utils.py)
+        historical_data = blockchain_provider.get_historical_token_data(start_date, end_date)
+        return jsonify({"historical_data": historical_data})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
