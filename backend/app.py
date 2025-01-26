@@ -70,6 +70,26 @@ def get_historical_data():
         return jsonify({"historical_data": historical_data})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    
+def transfer_token(from_address, to_address, token_id):
+    tx = contract.functions.transferFrom(from_address, to_address, token_id).transact(
+        {"from": from_address}
+    )
+    w3.eth.wait_for_transaction_receipt(tx)
+    print(f"Token {token_id} transferred from {from_address} to {to_address}.")
+def list_token(token_id, price):
+    tx = contract.functions.listToken(token_id, price).transact(
+        {"from": "0xYourWalletAddress"}
+    )
+    w3.eth.wait_for_transaction_receipt(tx)
+    print(f"Token {token_id} listed for sale at {price} wei.")
+
+def buy_token(token_id):
+    price = contract.functions.listings(token_id).call()[1]
+    tx = contract.functions.buyToken(token_id).transact(
+        {"from": "0xYourWalletAddress", "value": price}
+    )
+    w3.eth.wait_for_transaction_receipt(tx)
+    print(f"Token {token_id} purchased.")
+
 if __name__ == "__main__":
     app.run(debug=True)
