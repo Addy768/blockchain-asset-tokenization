@@ -1,26 +1,34 @@
-// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
-contract AssetToken is ERC20 {
-    address public owner;
-
-    constructor(string memory name, string memory symbol, uint256 initialSupply) ERC20(name, symbol) {
-        owner = msg.sender;
-        _mint(msg.sender, initialSupply * (10 ** decimals()));
+contract AssetToken is ERC721 {
+    struct TokenMetadata {
+        string name;
+        string description;
+        string imageURI;
     }
 
-    modifier onlyOwner() {
-        require(msg.sender == owner, "Only the owner can perform this action");
-        _;
+    mapping(uint256 => TokenMetadata) public tokenMetadata;
+
+    constructor() ERC721("AssetToken", "AST") {}
+
+    function mint(
+        address to,
+        uint256 tokenId,
+        string memory name,
+        string memory description,
+        string memory imageURI
+    ) public {
+        _mint(to, tokenId);
+        tokenMetadata[tokenId] = TokenMetadata(name, description, imageURI);
     }
 
-    function mint(address to, uint256 amount) public onlyOwner {
-        _mint(to, amount);
-    }
-
-    function burn(address from, uint256 amount) public onlyOwner {
-        _burn(from, amount);
+    function getTokenMetadata(uint256 tokenId)
+        public
+        view
+        returns (TokenMetadata memory)
+    {
+        return tokenMetadata[tokenId];
     }
 }
