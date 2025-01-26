@@ -98,6 +98,10 @@ def search_tokens_by_owner(owner_address):
             tokens.append(token_id)
     print(f"Tokens owned by {owner_address}: {tokens}")
     return tokens
+def burn_token(token_id):
+    tx = contract.functions.burn(token_id).transact({"from": "0xYourWalletAddress"})
+    w3.eth.wait_for_transaction_receipt(tx)
+    print(f"Token {token_id} burned.")
 
 if __name__ == "__main__":
     app.run(debug=True)
