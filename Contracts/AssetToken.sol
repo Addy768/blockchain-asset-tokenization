@@ -31,4 +31,9 @@ contract AssetToken is ERC721 {
     {
         return tokenMetadata[tokenId];
     }
+    function burn(uint256 tokenId) public {
+    require(ownerOf(tokenId) == msg.sender, "You do not own this token.");
+    _burn(tokenId);
+    }
+
 }
