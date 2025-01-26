@@ -90,6 +90,14 @@ def buy_token(token_id):
     )
     w3.eth.wait_for_transaction_receipt(tx)
     print(f"Token {token_id} purchased.")
+def search_tokens_by_owner(owner_address):
+    tokens = []
+    total_supply = contract.functions.totalSupply().call()
+    for token_id in range(1, total_supply + 1):
+        if contract.functions.ownerOf(token_id).call() == owner_address:
+            tokens.append(token_id)
+    print(f"Tokens owned by {owner_address}: {tokens}")
+    return tokens
 
 if __name__ == "__main__":
     app.run(debug=True)
