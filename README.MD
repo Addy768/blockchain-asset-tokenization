@@ -31,7 +31,7 @@ A Flask-based REST API for managing tokenized assets on the Ethereum blockchain.
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/blockchain-asset-tokenization.git
+git clone https://github.com/Addy768/blockchain-asset-tokenization.git
 cd blockchain-asset-tokenization
 ```
 
