@@ -1,4 +1,4 @@
-# Blockchain Asset Tokenization API
+# Blockchain Asset Tokenization
 
 A Flask-based REST API for managing tokenized assets on the Ethereum blockchain. This project enables secure minting, trading, and management of digital assets through a simple HTTP interface.
 
